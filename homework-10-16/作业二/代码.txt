@@ -3,54 +3,39 @@ import matplotlib.pyplot as plt
 
 A = np.array([[0, 1, -1], [-1, 0, 1]])
 
-# 列空间和行空间的基
-column = np.linalg.qr(A)[0]
-row = np.linalg.qr(A.T)[0]
-
-# 创建一个二维图形
-fig, ax = plt.subplots()
-
-# 绘制列空间中的向量
-for vector in column.T:
-    ax.quiver(0, 0, vector[0], vector[1], angles='xy', scale_units='xy', scale=1, color='green')
-
-# 绘制行空间中的向量
-for vector in row.T:
-    ax.quiver(0, 0, vector[0], vector[1], angles='xy', scale_units='xy', scale=1, color='red')
-
-# 设置坐标轴范围
-ax.set_xlim([-1, 1])
-ax.set_ylim([-1, 1])
-
-# 设置坐标轴标签
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-
-# 显示图形
-plt.show()
-
-
 # 奇异值分解
-U, s, Vt = np.linalg.svd(A)
+U, s, V = np.linalg.svd(A)
 
 # 零空间和左零空间的基向量
-null = Vt[-1]
-left_null = U[:, -1]
+null_space = V[-1]
+left_null_space = U[:, -1]
 
 # 创建一个三维图形
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
 # 绘制零空间中的向量
-ax.quiver(0, 0, 0, null[0], null[1], null[2], color='green')
+ax.quiver(0, 0, 0, null_space[0], null_space[1], null_space[2], color='blue')
 
 # 绘制左零空间中的向量
-ax.quiver(0, 0, 0, left_null[0], left_null[1], 0, color='red')
+ax.quiver(0, 0, 0, left_null_space[0], left_null_space[1], 0, color='red')
+
+# 列空间和行空间的基向量
+column_space = np.linalg.qr(A)[0]
+row_space = np.linalg.qr(A.T)[0]
+
+# 绘制列空间中的向量
+for vector in column_space.T:
+    ax.quiver(0, 0, 0, vector[0], vector[1], 0, color='green')
+
+# 绘制行空间中的向量
+for vector in row_space.T:
+    ax.quiver(0, 0, 0, vector[0], vector[1], 0, color='black')
 
 # 设置坐标轴范围
-ax.set_xlim([-1, 1])
-ax.set_ylim([-1, 1])
-ax.set_zlim([-1, 1])
+ax.set_xlim([-0.5, 1])
+ax.set_ylim([-0.5, 1])
+ax.set_zlim([-0.5, 1])
 
 # 设置坐标轴标签
 ax.set_xlabel('X')
