@@ -242,26 +242,177 @@ import time
 # # print(Student.name)
 
 
-class Singleton:
-    __instance = None  # 私有的类属性
-    __is_first = True
+# class Singleton:
+#     __instance = None  # 私有的类属性
+#     __is_first = True
+#
+#     @classmethod
+#     def __new__(cls, *args, **kwargs):
+#         if cls.__instance == None:
+#             cls.__instance = object.__new__(cls)
+#         return cls.__instance
+#
+#     def __init__(self, a, b):
+#         if self.__is_first:
+#             self.a = a
+#             self.b = b
+#             self.__is_first = False
+#
+# s1 = Singleton("heheh", "hahah")
+# s2 = Singleton("哈哈哈", "嘿嘿嘿")
+# print(s1 is s2)  # True
+# print(s1.a)  # heheh
+# print(s1.b)  # hahah
+# print(s2.a)  # heheh
+# print(s2.b)  # hahah
 
-    @classmethod
-    def __new__(cls, *args, **kwargs):
-        if cls.__instance == None:
-            cls.__instance = object.__new__(cls)
-        return cls.__instance
+# class Tuple:
+#     __count = 0
+#
+#     def __init__(self, a, b):
+#         self.a = a
+#         self.b = b
+#         Tuple.__count += 1
+#
+#     @classmethod
+#     def get_count(cls):
+#         return cls.__count
+#
+#
+# print(Tuple.get_count())
+# t1 = Tuple(1, 2);
+# print(Tuple.get_count())
+# t2 = Tuple(1, 2);
+# print(Tuple.get_count())
+# t3 = Tuple(1, 2);
+# print(Tuple.get_count())
+# t4 = Tuple(1, 2);
+# print(Tuple.get_count())
 
-    def __init__(self, a, b):
-        if self.__is_first:
-            self.a = a
-            self.b = b
-            self.__is_first = False
 
-s1 = Singleton("heheh", "hahah")
-s2 = Singleton("哈哈哈", "嘿嘿嘿")
-print(s1 is s2)  # True
-print(s1.a)  # heheh
-print(s1.b)  # hahah
-print(s2.a)  # heheh
-print(s2.b)  # hahah
+# class Animal:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     def sleep(self):
+#         print(f"{self.name}正在睡觉")
+#
+#
+# class Dog(Animal):
+#     def bark(self):
+#         print(self.name + "正在狗叫")
+#
+#
+# class Student(Animal):
+#     def study(self):
+#         print(self.name + "正在学习")
+#
+#
+# d1 = Dog("大黄", 3)
+# print(d1.name)
+
+# class A:
+#     pass
+#
+# class B:
+#     def foo(self):
+#         print("我是B类里的foo方法")
+#
+# class C(A):
+#     def foo(self):
+#         print("我是C类里的foo方法")
+#
+# class D(B):
+#     pass
+#
+# class X(D,C):
+#     pass
+#
+# x1 = X()
+# x1.foo() #我是B类里的foo方法
+# print(X.__mro__)
+# #(<class '__main__.X'>, <class '__main__.D'>,
+# # <class '__main__.B'>, <class '__main__.C'>,
+# # <class '__main__.A'>, <class 'object'>)
+
+
+# class Person:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+# class C:
+#     pass
+#
+# class Student(Person):
+#     pass
+#
+# p1 = Person("张三", 18)
+# s1 = Student("李四", 30)
+# print(isinstance(s1, Person))  # True
+# print(isinstance(s1, Student))  # True
+# print(isinstance(s1, (Person, Student, C)))  # True
+# print(issubclass(Person, Student))  # False
+# print(issubclass(Student, Person))  # True
+# print(issubclass(Student, (Person, C)))  # True
+
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def sleep(self):
+        print("我是Person类，我叫" + self.name + "我正在睡觉")
+
+
+class Student(Person):
+    def __init__(self, name, age, school):
+        # 方法一
+        # self.name = name
+        # self.age = age
+
+        # 方法二
+        # Person.__init__(self,name,age) #手动调用父类的__init__方法
+
+        # 方法三  使用super直接调用父类的方法
+        super(Student, self).__init__(name, age)
+        self.school = school
+
+    def sleep(self):
+        print("我是tudent类，我叫" + self.name + "我正在睡觉")
+
+    def study(self):
+        print(self.name + "正在学习")
+
+
+p = Person("李四", 30)
+s = Student("张三", 20, "清华大学")
+
+
+
+
+
+
+# class Person:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     def sleep(self):
+#         print("我是Person类，我叫" + self.name + "我正在睡觉")
+#
+#
+# class Student(Person):
+#     def sleep(self):
+#         print("我是tudent类，我叫" + self.name + "我正在睡觉")
+#
+#     def study(self):
+#         print(self.name + "正在学习")
+#
+#
+# p = Person("张三", 20)
+# s = Student("李四", 30)
+# p.sleep()  # 我是Person类，我叫张三我正在睡觉
+# s.sleep()  # 我是tudent类，我叫李四我正在睡觉
